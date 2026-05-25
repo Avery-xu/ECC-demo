@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Neural Speech Compression: A Benchmark and A New Entropy-Constrained Codec</title>
+    <meta
+      name="description"
+      content="Demo page for Neural Speech Compression: A Benchmark and A New Entropy-Constrained Codec."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="top-nav" aria-label="Page navigation">
+        <a href="#abstract">Abstract</a>
+        <a href="#overview">Overview</a>
+        <a href="#figures">Figures</a>
+        <a href="#audio">Audio</a>
+      </nav>
+
+      <section class="hero">
+        <p class="venue-tag">Project demo</p>
+        <h1>Neural Speech Compression: A Benchmark and A New Entropy-Constrained Codec</h1>
+        <p class="subtitle">Learning-based speech compression with entropy-constrained representation learning.</p>
+
+        <div class="authors" aria-label="Authors">
+          <span>Jun Xu</span>
+          <span>Zhengxue Cheng</span>
+          <span>Fengxi Zhang</span>
+          <span>Yuhan Liu</span>
+          <span>Lei Li</span>
+          <span>Zhe Wang</span>
+          <span>Li Song</span>
+          <span>Wenjun Zhang</span>
+        </div>
+
+        <p class="affiliation">
+          School of Information Science and Electronic Engineering, Shanghai Jiao Tong University,
+          Shanghai 200240, China
+        </p>
+
+        <div class="action-row" aria-label="Project links">
+          <a class="button" href="#audio">Audio samples</a>
+          <a class="button secondary" href="assets/figures/teaser.pdf">Teaser figure</a>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <section id="abstract" class="section">
+        <h2>Abstract</h2>
+        <p>
+          Learning-based speech compression has achieved strong low-bitrate performance, but many
+          neural speech codecs still rely on fixed-length quantized indices or post-hoc entropy
+          coding of already generated token streams, which cannot fully exploit the non-uniform and
+          correlated structure of learned speech latents. In this paper, we study learning-based
+          speech compression from both a benchmark and an entropy-constrained representation
+          learning perspective. We first formulate the compression problem and summarize recent
+          progress in terms of transform domains, backbone architectures, quantization and entropy
+          coding strategies, and training objectives. We then propose an entropy-constrained neural
+          speech codec that combines scalar quantization with a learned entropy model, including a
+          hyperprior, channel-wise context modeling, latent residual prediction, and lightweight
+          temporal modeling. To further improve low-bitrate coding, we introduce entropy skip, which
+          deterministically suppresses highly predictable residual symbols using decoder-available
+          scale estimates. Experiments on LibriTTS show that the proposed codec achieves strong
+          objective and subjective performance in the low-bitrate regime. Compared with FunCodec, it
+          improves BD-ViSQOL by 0.216 and BD-PESQ by 0.703, corresponding to bitrate reductions of
+          43.90% and 62.78% at matched quality, respectively. Detailed ablations and diagnostic
+          analyses further validate the roles of transform-entropy co-design, post-hoc entropy
+          coding comparison, and entropy skip.
+        </p>
+        <p class="keywords">
+          <strong>Keywords:</strong> Speech Compression, Neural Speech Codec, Entropy Model,
+          Linear Attention
+        </p>
+      </section>
+
+      <section id="overview" class="section">
+        <h2>Overview</h2>
+        <figure class="wide-figure">
+          <a href="assets/figures/teaser.pdf">
+            <img
+              src="assets/figures/teaser.png"
+              alt="Teaser overview of the benchmark and proposed entropy-constrained neural speech codec."
+            >
+          </a>
+          <figcaption>
+            Teaser overview of the benchmark and proposed entropy-constrained neural speech codec for
+            content-aware variable-rate speech compression.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section id="figures" class="section">
+        <h2>Figures</h2>
+        <div class="figure-stack">
+          <figure>
+            <a href="assets/figures/taxonomy.pdf">
+              <img
+                src="assets/figures/taxonomy.png"
+                alt="Taxonomy of recent learning-based speech compression methods."
+              >
+            </a>
+            <figcaption>
+              Taxonomy of recent learning-based speech compression methods, organized by input and
+              output domain, encoder-decoder backbone, quantization and entropy coding, and training
+              objectives.
+            </figcaption>
+          </figure>
+
+          <figure>
+            <a href="assets/figures/overview.pdf">
+              <img
+                src="assets/figures/overview.png"
+                alt="Overview of the proposed entropy-constrained codec for speech compression."
+              >
+            </a>
+            <figcaption>
+              Overview of the proposed entropy-constrained codec (ECC). The transform operates in
+              the STFT domain and the entropy model combines hyperprior features, channel-wise
+              context modeling, and latent residual prediction.
+            </figcaption>
+          </figure>
+
+          <figure>
+            <a href="assets/figures/entropymodel.pdf">
+              <img
+                src="assets/figures/entropymodel.png"
+                alt="Channel-wise entropy model."
+              >
+            </a>
+            <figcaption>
+              Channel-wise entropy model with hyperprior side information, sequential latent-slice
+              context prediction, and LRP-based decoded latent refinement.
+            </figcaption>
+          </figure>
+
+          <figure>
+            <a href="assets/figures/rd_curve_visqol_pesq.pdf">
+              <img
+                src="assets/figures/rd_curve_visqol_pesq.png"
+                alt="Rate-distortion performance on LibriTTS."
+              >
+            </a>
+            <figcaption>
+              Rate-distortion performance on LibriTTS (test-all), evaluated by ViSQOL and PESQ. The
+              insets highlight the low-bitrate regime.
+            </figcaption>
+          </figure>
+
+          <div class="two-column">
+            <figure>
+              <a href="assets/figures/mushra.pdf">
+                <img
+                  src="assets/figures/mushra.png"
+                  alt="MUSHRA subjective test results in the low-bitrate regime."
+                >
+              </a>
+              <figcaption>
+                MUSHRA subjective test results in the low-bitrate regime.
+              </figcaption>
+            </figure>
+
+            <figure>
+              <a href="assets/figures/ablation.pdf">
+                <img
+                  src="assets/figures/ablation.png"
+                  alt="Ablation study on LibriTTS."
+                >
+              </a>
+              <figcaption>
+                Ablation study on LibriTTS (test-all), covering backbone design, entropy structure,
+                and entropy attention depth.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="audio" class="section">
+        <div class="section-heading">
+          <div>
+            <h2>Audio Samples</h2>
+            <p class="section-note">Sample files are loaded from the local <code>audio/</code> folder.</p>
+          </div>
+        </div>
+
+        <div class="audio-panel">
+          <div class="audio-table-wrap">
+            <table class="audio-table">
+              <thead>
+                <tr id="audio-head"></tr>
+              </thead>
+              <tbody id="audio-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Neural Speech Compression: A Benchmark and A New Entropy-Constrained Codec</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
