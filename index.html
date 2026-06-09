@@ -75,6 +75,9 @@ Extensive experiments show that ECC achieves a favorable low-bitrate rate--disto
             Teaser overview of the benchmark and proposed entropy-constrained neural speech codec for
             content-aware variable-rate speech compression.
           </figcaption>
+          <p class="figure-note">
+            Conventional speech codecs rely on hand-designed transform, quantization, and entropy-coding tools, while recent neural codecs learn nonlinear speech representations from data. ECC bridges these two paradigms by integrating learned entropy modeling into neural transform coding, so that the latent representation is optimized for both reconstruction quality and statistical compressibility.
+          </p>
         </figure>
       </section>
 
@@ -93,6 +96,9 @@ Extensive experiments show that ECC achieves a favorable low-bitrate rate--disto
               output domain, encoder-decoder backbone, quantization and entropy coding, and training
               objectives.
             </figcaption>
+            <p class="figure-note">
+              We organize recent learning-based speech codecs along four axes: input/output domain, encoder-decoder backbone, quantization and entropy coding, and training objectives. This taxonomy highlights how different codec designs represent speech signals, model temporal dependencies, construct discrete symbols, and handle coding costs.
+            </p>
           </figure>
 
           <figure>
@@ -107,6 +113,9 @@ Extensive experiments show that ECC achieves a favorable low-bitrate rate--disto
               the STFT domain and the entropy model combines hyperprior features, channel-wise
               context modeling, and latent residual prediction.
             </figcaption>
+            <p class="figure-note">
+              ECC jointly learns the analysis-synthesis transform, the latent probability model, and the reconstruction objective. The waveform is first converted into an STFT representation, then encoded into scalar latents whose probabilities are estimated from hyperprior features and decoded context for rate estimation during training and arithmetic coding during inference.
+            </p>
           </figure>
 
           <figure>
@@ -120,6 +129,9 @@ Extensive experiments show that ECC achieves a favorable low-bitrate rate--disto
               Channel-wise entropy model with hyperprior side information, sequential latent-slice
               context prediction, and LRP-based decoded latent refinement.
             </figcaption>
+            <p class="figure-note">
+              The channel-wise entropy model decodes hyper-latent side information into mean and scale features, then processes latent slices sequentially. For each slice, Gaussian parameters are predicted from the hyperprior features and previously decoded slices, while latent residual prediction refines the decoded slice before synthesis and subsequent context prediction.
+            </p>
           </figure>
 
           <figure>
@@ -132,6 +144,9 @@ Extensive experiments show that ECC achieves a favorable low-bitrate rate--disto
             <figcaption>
               Rate-distortion performance on LibriTTS (test-all).
             </figcaption>
+            <p class="figure-note">
+              On LibriTTS test-all, ECC consistently occupies a favorable low-bitrate region across perceptual quality, intelligibility, recognition, and speaker-preservation metrics. This demonstrates the effectiveness of entropy-constrained scalar-latent coding on the in-domain evaluation set.
+            </p>
           </figure>
 
           <figure>
@@ -144,6 +159,9 @@ Extensive experiments show that ECC achieves a favorable low-bitrate rate--disto
             <figcaption>
               Rate-distortion performance on VCTK.
             </figcaption>
+            <p class="figure-note">
+              On VCTK, ECC preserves a similar low-bitrate advantage under speaker and recording-condition shifts, indicating that the learned representation and entropy model generalize beyond the LibriTTS training corpus.
+            </p>
           </figure>
 
           <figure>
@@ -156,7 +174,11 @@ Extensive experiments show that ECC achieves a favorable low-bitrate rate--disto
             <figcaption>
               MUSHRA subjective test results in the low-bitrate regime.
             </figcaption>
+            <p class="figure-note">
+              The MUSHRA listening test further confirms the low-bitrate perceptual quality of ECC. ECC obtains high subjective scores on LibriTTS test-clean, LibriTTS test-other, and VCTK, remaining close to the strongest competing neural codec while operating at a lower bitrate.
+            </p>
           </figure>
+        </div>
 
       </section>
 
