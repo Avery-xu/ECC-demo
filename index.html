@@ -8,7 +8,7 @@
       name="description"
       content="Demo page for Neural Speech Compression: A Benchmark and A New Entropy-Constrained Codec."
     >
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=2">
   </head>
   <body>
     <header class="site-header">
@@ -29,8 +29,6 @@
           <span>Zhengxue Cheng</span>
           <span>Fengxi Zhang</span>
           <span>Yuhan Liu</span>
-          <span>Lei Li</span>
-          <span>Zhe Wang</span>
           <span>Li Song</span>
           <span>Wenjun Zhang</span>
         </div>
@@ -42,7 +40,6 @@
 
         <div class="action-row" aria-label="Project links">
           <a class="button" href="#audio">Audio samples</a>
-          <a class="button secondary" href="assets/figures/teaser.pdf">Teaser figure</a>
         </div>
       </section>
     </header>
@@ -51,24 +48,13 @@
       <section id="abstract" class="section">
         <h2>Abstract</h2>
         <p>
-          Learning-based speech compression has achieved strong low-bitrate performance, but many
-          neural speech codecs still rely on fixed-length quantized indices or post-hoc entropy
-          coding of already generated token streams, which cannot fully exploit the non-uniform and
-          correlated structure of learned speech latents. In this paper, we study learning-based
-          speech compression from both a benchmark and an entropy-constrained representation
-          learning perspective. We first formulate the compression problem and summarize recent
-          progress in terms of transform domains, backbone architectures, quantization and entropy
-          coding strategies, and training objectives. We then propose an entropy-constrained neural
-          speech codec that combines scalar quantization with a learned entropy model, including a
-          hyperprior, channel-wise context modeling, latent residual prediction, and lightweight
-          temporal modeling. To further improve low-bitrate coding, we introduce entropy skip, which
-          deterministically suppresses highly predictable residual symbols using decoder-available
-          scale estimates. Experiments on LibriTTS show that the proposed codec achieves strong
-          objective and subjective performance in the low-bitrate regime. Compared with FunCodec, it
-          improves BD-ViSQOL by 0.216 and BD-PESQ by 0.703, corresponding to bitrate reductions of
-          43.90% and 62.78% at matched quality, respectively. Detailed ablations and diagnostic
-          analyses further validate the roles of transform-entropy co-design, post-hoc entropy
-          coding comparison, and entropy skip.
+          Learning-based speech compression has achieved promising low-bitrate performance, but many neural speech codecs still describe quantized latents with preset-rate discrete symbols or apply entropy coding only after symbol generation.
+Such designs decouple representation learning from probability modeling, limiting their ability to exploit the non-uniform usage and temporal dependencies of learned speech latents.
+In this paper, we study neural speech compression from an entropy-constrained coding perspective.
+We first formulate a unified learning-based speech coding pipeline and provide a benchmark-style analysis of recent neural speech codecs, showing that explicit probability modeling remains underexplored in learned speech compression.
+We then propose ECC, an Entropy-Constrained Codec that combines scalar quantization with a learned entropy model. ECC integrates hyperprior-based side information, channel-wise context modeling, latent residual prediction, and lightweight temporal modeling to estimate latent likelihoods for rate estimation during training and arithmetic coding during inference.
+To further improve low-bitrate efficiency, ECC introduces entropy skip, which omits highly predictable residual symbols using decoder-available scale estimates without transmitting additional skip masks.
+Extensive experiments show that ECC achieves a favorable low-bitrate rate--distortion trade-off over conventional and neural codec baselines, while ablation and diagnostic studies validate the effectiveness of entropy modeling and entropy skip.
         </p>
         <p class="keywords">
           <strong>Keywords:</strong> Speech Compression, Neural Speech Codec, Entropy Model,
@@ -137,62 +123,81 @@
           </figure>
 
           <figure>
-            <a href="assets/figures/rd_curve_visqol_pesq.pdf">
+            <a href="assets/figures/libritts_rd_curves_performance_grid.pdf">
               <img
-                src="assets/figures/rd_curve_visqol_pesq.png"
+                src="assets/figures/libritts_rd_curves_performance_grid.png"
                 alt="Rate-distortion performance on LibriTTS."
               >
             </a>
             <figcaption>
-              Rate-distortion performance on LibriTTS (test-all), evaluated by ViSQOL and PESQ. The
-              insets highlight the low-bitrate regime.
+              Rate-distortion performance on LibriTTS (test-all).
             </figcaption>
           </figure>
 
-          <div class="two-column">
-            <figure>
-              <a href="assets/figures/mushra.pdf">
-                <img
-                  src="assets/figures/mushra.png"
-                  alt="MUSHRA subjective test results in the low-bitrate regime."
-                >
-              </a>
-              <figcaption>
-                MUSHRA subjective test results in the low-bitrate regime.
-              </figcaption>
-            </figure>
+          <figure>
+            <a href="assets/figures/vctk_rd_curves_performance_grid.pdf">
+              <img
+                src="assets/figures/vctk_rd_curves_performance_grid.png"
+                alt="Rate-distortion performance on VCTK."
+              >
+            </a>
+            <figcaption>
+              Rate-distortion performance on VCTK.
+            </figcaption>
+          </figure>
 
-            <figure>
-              <a href="assets/figures/ablation.pdf">
-                <img
-                  src="assets/figures/ablation.png"
-                  alt="Ablation study on LibriTTS."
-                >
-              </a>
-              <figcaption>
-                Ablation study on LibriTTS (test-all), covering backbone design, entropy structure,
-                and entropy attention depth.
-              </figcaption>
-            </figure>
-          </div>
-        </div>
+          <figure>
+            <a href="assets/figures/mushra.pdf">
+              <img
+                src="assets/figures/mushra.png"
+                alt="MUSHRA subjective test results in the low-bitrate regime."
+              >
+            </a>
+            <figcaption>
+              MUSHRA subjective test results in the low-bitrate regime.
+            </figcaption>
+          </figure>
+
       </section>
 
       <section id="audio" class="section">
         <div class="section-heading">
           <div>
             <h2>Audio Samples</h2>
-            <p class="section-note">Sample files are loaded from the local <code>audio/</code> folder.</p>
+            <p class="section-note">Comparison of proposed method (ECC) with other methods across four datasets.</p>
           </div>
         </div>
 
         <div class="audio-panel">
+          <h3>LibriTTS (Clean)</h3>
           <div class="audio-table-wrap">
-            <table class="audio-table">
-              <thead>
-                <tr id="audio-head"></tr>
-              </thead>
-              <tbody id="audio-body"></tbody>
+            <table class="audio-table" id="table-LibriTTS_Clean">
+              <thead><tr class="audio-head"></tr></thead>
+              <tbody class="audio-body"></tbody>
+            </table>
+          </div>
+
+          <h3>LibriTTS (Other)</h3>
+          <div class="audio-table-wrap">
+            <table class="audio-table" id="table-LibriTTS_Other">
+              <thead><tr class="audio-head"></tr></thead>
+              <tbody class="audio-body"></tbody>
+            </table>
+          </div>
+
+          <h3>VCTK</h3>
+          <div class="audio-table-wrap">
+            <table class="audio-table" id="table-VCTK">
+              <thead><tr class="audio-head"></tr></thead>
+              <tbody class="audio-body"></tbody>
+            </table>
+          </div>
+
+          <h3>AIShell-3</h3>
+          <div class="audio-table-wrap">
+            <table class="audio-table" id="table-AIShell">
+              <thead><tr class="audio-head"></tr></thead>
+              <tbody class="audio-body"></tbody>
             </table>
           </div>
         </div>
@@ -203,6 +208,6 @@
       <p>Neural Speech Compression: A Benchmark and A New Entropy-Constrained Codec</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2"></script>
   </body>
 </html>
